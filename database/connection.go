@@ -1,23 +1,22 @@
 package database
 
 import (
-	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 	"time"
 )
 
-var database *sql.DB
+var database *sqlx.DB
 
 func InitializeDatabase() error {
 
-	db, error := sql.Open("mysql", "root@/anankes")
+	db, error := sqlx.Connect("mysql", "user=root dbname=anankes sslmode=disable")
 
 	if error != nil {
 		return error
 	}
 
-	db.SetMaxIdleConns(10)
 	db.SetMaxOpenConns(10)
+	db.SetMaxIdleConns(10)
 	db.SetConnMaxLifetime(time.Minute * 3)
 
 	database = db
@@ -25,6 +24,6 @@ func InitializeDatabase() error {
 	return nil
 }
 
-func GetConnection() *sql.DB {
+func GetConnection() *sqlx.DB {
 	return database
 }
