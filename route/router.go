@@ -1,33 +1,17 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"EcommerceShirt/handler"
+	"github.com/gin-gonic/gin"
+)
 
 func InitializeRoutes(engine *gin.Engine) {
 
 	groupRoutes := engine.Group("/api/v1")
 
-	groupRoutes.GET("/products", func(context *gin.Context) {
-		context.JSON(200, gin.H{
-			"message": "Ok",
-		})
-	})
-
-	groupRoutes.POST("/product/:id", func(context *gin.Context) {
-		context.JSON(200, gin.H{
-			"message": "Ok",
-		})
-	})
-
-	groupRoutes.DELETE("/product/:id", func(context *gin.Context) {
-		context.JSON(200, gin.H{
-			"message": "Ok",
-		})
-	})
-
-	groupRoutes.PUT("/product", func(context *gin.Context) {
-		context.JSON(200, gin.H{
-			"message": "Ok",
-		})
-	})
+	groupRoutes.GET("/products", handler.GetProducts)
+	groupRoutes.POST("/product/:id", handler.GetProduct)
+	groupRoutes.DELETE("/product/:id", handler.DeleteProduct)
+	groupRoutes.PUT("/product", handler.UpdateProduct)
 
 }
